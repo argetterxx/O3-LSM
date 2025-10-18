@@ -1,4 +1,4 @@
-# **Dream-LSM**
+# **O3-LSM**
 
 ## **Dependencies**
 
@@ -8,7 +8,7 @@
 - Install RDMA packages
 
 ## Deployment
-### **Dream-LSM**
+### **O3-LSM**
 - Notice that multiple clients should bind with one server.
 
 - **DM management**:
@@ -34,7 +34,7 @@
     ./rdma_server
     ```
 
-- **Dream-LSM instance**
+- **O3-LSM instance**
   1. Config your HDFS cluster:
   In the env_posix.cc, line 427:
   `Status s = NewHdfsFileSystem("hdfs://hdfs-master:9000/", &fs);`
@@ -81,7 +81,7 @@ compaction on disaggregated storage.
 
 ## Evaluation
 
-Run db_bench with Dream-LSM
+Run db_bench with O3-LSM
 
 ```
 ./db_bench --num=1845000 --max_write_buffer_number=8 --disable_auto_compactions=1 --cache_index_and_filter_blocks=true --pin_l0_filter_and_index_blocks_in_cache=true --bloom_bits=10 --cache_size=536870912 --memtable_bloom_size_ratio=0.1 --memtable_whole_key_filtering=true --max_local_write_buffer_number=2 --max_background_compactions=4 --max_background_flushes=4 --level0_slowdown_writes_trigger=32 --level0_stop_writes_trigger=48 --benchmarks=fillrandom,stats --key_size=16 --value_size=64 --num_column_families=1 --threads=16 --write_buffer_size=67108864 --use_remote_flush=1 --min_write_buffer_number_to_merge=8 --subcompactions=4 --compaction_readahead_size=10485760 --disable_wal=1 --db=/tmp/test --memnode_heartbeat_port=10086 --report_fillrandom_latency_and_load=true --track_flush_compaction_stats=true --statistics=true --memnode_ip=10.10.1.7 --memnode_port=9091 --local_ip=10.10.1.4 --compression_type=none
